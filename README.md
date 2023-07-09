@@ -10,7 +10,7 @@
   - 301永久重定向，说明请求的资源已经被移动到了由 Location 头部指定的url上，是固定的不会再改变; 
     302是临时性重定向，旧地址还能用; 
     304:not modified 未改变说明无需再次传输请求的内容，也就是说可以使用缓存的内容。这通常是在一些安全的方法（safe），例如GET 或HEAD 或在请求中附带了头部信息：If-None-Match 或If-Modified-Since。
-  - 401: unauthorized; 403: forbidden; 405: method not allowed
+  - 401: unauthorized; 403: forbidden表示对请求资源的访问被服务器拒绝; 405: method not allowed
 四. v-model底层原理
   1) vue2里v-model等于:value+@input/@change的语法糖.
    - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
@@ -18,13 +18,14 @@
    - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
   2) vue3里v-model等价于:modelValue+@update:modelValue的语法糖
    - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
-五. 静态资源的缓存
+五. 静态资源的http缓存, 见js/http强缓存协商缓存
    - 缓存是一种保存资源副本并在下次请求时直接使用该副本的技术。当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。这样带来的好处有：缓解服务器端压力，提升性能(获取资源的耗时更短了)。对于网站来说，缓存是达到高性能的重要组成部分。缓存需要合理配置，因为并不是所有资源都是永久不变的：重要的是对一个资源的缓存应截止到其下一次发生改变（即不能缓存过期的资源）。
-   - 强制缓存expire、cache-control。
-   Cache-Control: max-age=31536000
-
+   - 强制缓存expire、cache-control(max-age=31536000)
 六. cookie缓存
-
+七. spa: 见js/
+  - 参考: https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/的解释：
+  1) 多页应用 (MPA，Multi-Page Application) 是一个由多个 HTML 页面组成的网站，主要在服务器上渲染。当您导航到一个新页面时，您的浏览器会从服务器请求一个新的 HTML 页面
+  2) 单页应用(SPA，Single-Page Application) 是一个由单个 JavaScript 应用程序组成的网站，该应用程序在用户浏览器中加载，然后在本地呈现 HTML。SPA 也可能在服务器上生成 HTML，但 SPA 的独特之处在于它们能够在浏览器中将您的网站作为 JavaScript 应用程序运行，以便在您导航时呈现新的 HTML 页面。此外， Next.js、Nuxt、SvelteKit、Remix、Gatsby 和 Create React App 都是 SPA 框架的示例。
 
 
 ## react

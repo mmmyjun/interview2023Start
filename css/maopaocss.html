@@ -1,0 +1,180 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原生js 实现冒泡排序动画展示_陌上阳光明媚的博客 https://blog.csdn.net/qq_38389990/article/details/131210198 2/3</title>
+    <link rel="stylesheet" href="/base.css" />
+    <style>
+        #bar_container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        #bar_container>.bar {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #000;
+            border: 1px solid #000;
+            margin: 0 5px;
+            transition: all 0.3s ease-in-out;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="bar_container"></div>
+        <button id="sort_btn">开始排序</button>
+    </div>
+    <script>
+        let arr = [8, 3, 7, 1]
+        let len = arr.length
+        let bar_container = document.getElementById('bar_container')
+        let btn_div = document.getElementById('sort_btn')
+        function createChildrenDiv(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                const bar_div = document.createElement('div')
+                bar_div.classList = 'bar'
+                bar_div.innerHTML = arr[i]
+                bar_container.appendChild(bar_div)
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            createChildrenDiv(arr)
+        })
+        function sleep(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, ms)
+            })
+        }
+        async function animationFun(arr) {
+            let bars_div = document.getElementsByClassName('bar')
+            for (let i = 0; i < len - 1; i++) {
+                for (let j = 0; j < (len - 1 - i); j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        for (let k = 0; k < bars_div.length; k++) {
+                            if (k !== j && k !== (j + 1)) {
+                                bars_div[k].style.border = '1px solid #000'
+                            }
+                        }
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+                        bars_div[j].innerHTML = arr[j]
+                        bars_div[j].style.border = '1px solid red'
+                        bars_div[j + 1].innerHTML = arr[j + 1]
+                        bars_div[j + 1].style.border = '1px solid red'
+                        await sleep(1000)
+                    }
+                }
+            }
+            bar_container.innerHTML = ''
+            createChildrenDiv(arr)
+            return arr
+        }
+        btn_div.addEventListener('click', function () {
+            animationFun(arr)
+        })
+    </script>
+</body> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>冒泡排序动画展示: 对数组每个元素位置移动间隔1s展示动画</title>
+    <style>
+        #bar_container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: relative;
+        }
+
+        #bar_container>.bar {
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            color: #000;
+            border: 1px solid #000;
+            margin: 0 5px;
+            transition: all 1s;
+            box-sizing: border-box;
+            position: absolute;
+        }
+
+        #sort_btn {
+            position: absolute;
+            top: 100px;
+        }
+    </style>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="bar_container"></div>
+        <button id="sort_btn">开始排序</button>
+    </div>
+    <script>
+        let arr = [8, 3, 7, 1]
+        let len = arr.length
+        let bar_container = document.getElementById('bar_container')
+        let btn_div = document.getElementById('sort_btn')
+        var flagDiv = {};
+
+        function createChildrenDiv(arr) {
+            bar_container.innerHTML = ''
+            for (let i = 0; i < arr.length; i++) {
+                const bar_div = document.createElement('div')
+                bar_div.classList = 'bar'
+                bar_div.innerHTML = arr[i]
+                bar_div.style.left = i * 100 + 'px'
+                bar_container.appendChild(bar_div)
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            createChildrenDiv(arr)
+            let bars_div = document.getElementsByClassName('bar')
+            for (let i = 0; i < bars_div.length; i++) {
+                flagDiv[i] = bars_div[i]
+            }
+        })
+        function sleep(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, ms)
+            })
+        }
+        async function animationFun(arr) {
+            for (let i = 0; i < len - 1; i++) {
+                // j<a.length-i-1会提高代码运行效率，避免数据间不必要的比较。
+                // 每一轮比较之后都会冒出来一个数，j<a.length-1每一轮都会与全部的数据从头比到尾，而j<a.length-i-1每轮则是与未冒出来的数据进行比较，冒出来的数不在进行比较。
+                for (let j = 0; j < (len - 1 - i); j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        await sleep(1000);
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+                        flagDiv[j].style.left = (j + 1) * 100 + 'px'
+                        flagDiv[j + 1].style.left = j * 100 + 'px'
+                        let tmp = flagDiv[j];
+                        flagDiv[j] = flagDiv[j + 1]
+                        flagDiv[j + 1] = tmp
+                    }
+                }
+            }
+            return arr
+        }
+        btn_div.addEventListener('click', function () {
+            animationFun(arr)
+        })
+    </script>
+</body>

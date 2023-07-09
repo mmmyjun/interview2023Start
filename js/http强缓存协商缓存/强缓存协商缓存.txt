@@ -1,0 +1,26 @@
+参考资料: https://www.jianshu.com/p/9c95db596df5/  https://www.zhihu.com/question/422019386/answer/2398635003?utm_id=0
+
+1.协商缓存和强缓存区别强制缓存和协商缓存都针对静态资源
+2.强制缓存在前，协商缓存在后。
+3.资源未过期触发强制缓存，资源过期后再触发协商缓存。
+4.判断过期的方法expires（绝对时间）、cache-control（相对时间）
+5.判断资源是否有更新（Last-Modified 和 ETag）
+
+需要注意的是，即使是静态资源，也是依靠url来进行缓存的，也就是说只要是url地址不一样，就一定会去获取最新的数据。所以我们往往会有这样的需求，在静态文件的src后面添加一个时间戳，获取在打包的时候动态的生成带有hash值的文件名，这样可以阻止浏览器缓存，使用户获取到最新的文件，使用到最新的功能。
+
+如何判断一个资源是否更新？response header里 Last-Modified + etag
+
+
+强缓存总结
+1.cache-control: max-age=xxxx，public
+客户端和代理服务器都可以缓存该资源；
+客户端在xxx秒的有效期内，如果有请求该资源的需求的话就直接读取缓存,statu code:200 ，如果用户做了刷新操作，就向服务器发起http请求
+2.cache-control: max-age=xxxx，private
+只让客户端可以缓存该资源；代理服务器不缓存
+客户端在xxx秒内直接读取缓存,statu code:200
+3.cache-control: max-age=xxxx，immutable
+客户端在xxx秒的有效期内，如果有请求该资源的需求的话就直接读取缓存,statu code:200 ，即使用户做了刷新操作，也不向服务器发起http请求
+4.cache-control: no-cache
+跳过设置强缓存，但是不妨碍设置协商缓存；一般如果你做了强缓存，只有在强缓存失效了才走协商缓存的，设置了no-cache就不会走强缓存了，每次请求都回询问服务端。
+5.cache-control: no-store
+不缓存，这个会让客户端、服务器都不缓存，也就没有所谓的强缓存、协商缓存了。

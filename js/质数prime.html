@@ -7,6 +7,10 @@
 </head>
 <body>
     <script>
+        // a-z按照偏移量p进行替换，比如p是5那么b替换为g. 如果是z偏移量为3那么z应该被替换为c。输入x找到第p个质数(2,3, 5,7),比如输入3得到5。
+        // 忽略大小写字母等特殊情况
+
+        // https://zhuanlan.zhihu.com/p/64324026
         function isPrime(n) {
             if (n === 2 || n === 3) return true
             if (n % 2 === 0 || n % 3 === 0) return false
