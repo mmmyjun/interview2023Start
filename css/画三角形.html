@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画一个三角形</title>
+    <style>
+        .san1 {
+            width: 0px;
+            height: 0px;
+            border: 100px solid #000;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
+        }
+
+        .ti {
+            border: 100px solid #000;
+            border-top-color: #c22121;
+        }
+
+        .gong {
+            width: 200px;
+            height: 100px;
+            background: red;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="san1"></div>
+    <div class="san2" style="background: orange">等腰三角形 <svg>
+            <path d="M150 30 L130 130 L170 130 Z"></path>
+        </svg></div>
+    <hr>
+
+    <div class="ti"></div>
+
+    <div class="gong"></div>
+</body>
+</html>
