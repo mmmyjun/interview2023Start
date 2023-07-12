@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [11, 22, 33, 44, 55]
+
+        async function getData(url) {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    res(url)
+                }, 1000)
+            })
+        }
+        async function getTerm(ary) {
+            for (let i = 0; i < ary.length; i++) {
+                let result = await getData(ary[i])
+                console.log(result)
+            }
+        }
+        // getTerm(arr)
+
+
+        // async function loopFetch<T = unknown>(urls: string[], start = 0, dataMap = new Map<string, T>()) {
+        //     const data = await fetch(urls[start]).then <T> (
+        //         response => response.json()
+        //     )
+        //     dataMap.set(urls[start], data)
+        //     if (urls.length > start) {
+        //         return dataMap
+        //     }
+        //     return loopFetch<T>(urls, start + 1, dataMap)
+        // }
+        async function loopFetch(urls, start = 0, dataMap= new Map()) {
+            const data = await getData(urls[start]);
+            dataMap.set(urls[start], data);
+            if (urls.length - 1 <= start) {
+                return dataMap
+            }
+            console.log(data, dataMap)
+            return loopFetch(urls, start + 1, dataMap)
+        }
+        loopFetch(arr).then(e => {
+            console.log(e)
+        })
+        
+
+        // async function loopFetch(urls, start = 0, obj= {}) {
+        //     if (!urls[start]) return;
+        //     const data = await getData(urls[start]);
+        //     obj[urls[start]] = data;
+        //     return loopFetch(urls, start + 1, obj)
+        // }
+        // loopFetch(arr)
+
+    </script>
+</body>
+
+</html>
