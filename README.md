@@ -48,3 +48,5 @@
   1) 主子应用localstorage。见js/qiankunRelative
 
 ## 低代码平台:form-create
+
+## ts-node

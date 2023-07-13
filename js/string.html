@@ -1,0 +1,27 @@
+! <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 翻转字符串: 'abc'.split('').reverse().join('')
+        
+        // 使用递归函数，传入数组参数，返回和
+        let total = 0, arr=[3,5,2,6];
+        function getSum(arr, start = 0) {
+            
+            if (start >= arr.length) {
+                return total
+            }
+            total += arr[start]
+            start++ 
+            return getSum(arr, start)
+        }
+        console.log(getSum(arr))
+    </script>
+</body>
+</html>
