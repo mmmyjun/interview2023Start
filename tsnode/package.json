@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node index.ts"
+    "dev": "ts-node index.ts",
+    "esIndex": "ts-node esIndex.ts"
   },
   "author": "",
   "license": "ISC",
