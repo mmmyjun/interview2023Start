@@ -50,3 +50,6 @@
 ## 低代码平台:form-create
 
 ## ts-node
+
+## tailwind: https://tailwindcss.com/ https://tailwindcss.com/docs/guides/vite
+  - npm install -D tailwindcss postcss autoprefixer
