@@ -5,8 +5,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="greetings">
-   嘿嘿   <input v-focus>
+  <div class="greetings w-full" style="background-color: green;">
+    <div class="text w-screen h-screen" style="background-color: blue;">嘿嘿</div>
+    <input v-focus>
 
   </div>
 </template>
