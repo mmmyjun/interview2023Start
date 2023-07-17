@@ -30,8 +30,12 @@
 -  受控非受控组件, 见js/受控非受控组件
 
 
-## react
+## react:
   1) 常用hook: useState、useEffect、useMemo、useRef
+  2) 类组件和函数组件之间的区别?? ==> 类组件可以使用其他特性，如状态和生命周期钩子并且它有this; \
+     函数组件只能接受props渲染到页面，无状态组件，没有this,不能使用生命周期钩子 \
+     函数组件性能高于类组件，因为类组件使用要实例化，而函数组件直接执行返回结果即可
+  
 
 
 ## ts, 在vue2vitets文件夹src/tsTest
