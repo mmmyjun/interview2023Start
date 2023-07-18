@@ -1,4 +1,4 @@
-# 内容包括但不限于 从2023年开始记录和收集的前端面试题、日常练习
+#  从2023年开始记录和收集的前端面试题~~~
 
 ## vue2, 在vue2vitets文件夹里
 -  自定义指令
@@ -26,8 +26,15 @@
     1) 多页应用 (MPA，Multi-Page Application) 是一个由多个 HTML 页面组成的网站，主要在服务器上渲染。当您导航到一个新页面时，您的浏览器会从服务器请求一个新的 HTML 页面
     2) 单页应用(SPA，Single-Page Application) 是一个由单个 JavaScript 应用程序组成的网站，该应用程序在用户浏览器中加载，然后在本地呈现 HTML。SPA 也可能在服务器上生成 HTML，但 SPA 的独特之处在于它们能够在浏览器中将您的网站作为 JavaScript 应用程序运行，以便在您导航时呈现新的 HTML 页面。此外， Next.js、Nuxt、SvelteKit、Remix、Gatsby 和 Create React App 都是 SPA 框架的示例。
 -  输入ip地址到出现网页的过程 见js/输入ip地址到出现网页的过程.txt
--  virtualdom 见js/virtualdom
+-  虚拟dom virtualdom 见js/virtualdom/vue
 -  受控非受控组件, 见js/受控非受控组件
+-  Jquery / Mvvm框架的区别 \
+    1)、应用场景不同
+    jquery专注dom的原子操作, 而mvvm框架驱动整个web应用，操作dom只是它的一小部分，mvvm框架试图将数据映射到虚拟dom(非必须,比如svelte没有虚拟dom)，并在数据更新以后将更改同步到真实dom
+    2)、性能不同
+    原子化的dom操作在极端场景下，可能会产生性能问题，Mvvm框架在dom同步过程是分批次的(Vue里称作一个Tick)，可以尽可能较少非必要的dom更新，提升了性能
+    3)、多平台应用不同
+    jquery只能用于浏览器应用dom树的操作，而mvvm框架本身剥离了dom层，使其可以运行在Server端(ssr), Native端(例如react-native)
 
 
 ## react:
@@ -35,7 +42,18 @@
   2) 类组件和函数组件之间的区别?? ==> 类组件可以使用其他特性，如状态和生命周期钩子并且它有this; \
      函数组件只能接受props渲染到页面，无状态组件，没有this,不能使用生命周期钩子 \
      函数组件性能高于类组件，因为类组件使用要实例化，而函数组件直接执行返回结果即可
-  
+  3) 生命周期,见react/
+    componentWillmount（）组件将要挂载
+    componentDidMount（）组件挂载完毕
+    componentWillUnmount（）组件将要卸载
+    componentWillReceiveProps （） 组件将要接受参数 （子组件将要接受新参数时触发的生命周期函数）
+    shouldComponentUpdate() 是否可以组件更新，必须有 Boolean 值得返回，如果为 true 则继续生命周期，如果为 false 则不执行任何后续操作，相当于更新操作的阀门
+    componentWillUpdate （） 组件即将要更新
+    componentDidUpdate（）组件更新完成
+    unmountComponentAtNode() 卸载组件
+    render（）初始化渲染、状态更新之后执行人 render
+  4) 虚拟DOM, 见js/virtualdom \
+   本质就是通过编译 JSX 得到的一个以 JavaScript 对象形式存在的 DOM 结构描述。在组件初始化阶段，会通过生命周期方法 render 生成虚拟 DOM节点，然后通过调用 ReactDOM.render 方法，完成虚拟 DOM 节点到真实 DOM 节点的转换。在组件更新阶段，会再次调用 render 方法生成新的虚拟 DOM 节点，然后借助Diffing 算法比对两次虚拟 DOM 节点的差异，从而找出变化的部分实现最小化的 DOM 更新。所以也可以说虚拟 DOM 是 React 核心算法 Diffing 的基石。
 
 
 ## ts, 在vue2vitets文件夹src/tsTest
