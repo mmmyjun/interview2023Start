@@ -22,7 +22,7 @@
     1) 缓存是一种保存资源副本并在下次请求时直接使用该副本的技术。当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。这样带来的好处有：缓解服务器端压力，提升性能(获取资源的耗时更短了)。对于网站来说，缓存是达到高性能的重要组成部分。缓存需要合理配置，因为并不是所有资源都是永久不变的：重要的是对一个资源的缓存应截止到其下一次发生改变（即不能缓存过期的资源）。
     2) 强制缓存expire、cache-control(max-age=31536000)
 -  cookie缓存 setcookie(name,value,expire,path,domain,secure,Httponly)
--  spa: 见js/spampa 和本文档“ssr为何能提高加载速度”问题参考链接一致: https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/的解释：
+-  spa: 见js/spampa 和本文档“ssr为何能提高加载速度”问题参考链接一致: [astro mpa-spa](https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/)的解释：
     1) 多页应用 (MPA，Multi-Page Application) 是一个由多个 HTML 页面组成的网站，主要在服务器上渲染。当您导航到一个新页面时，您的浏览器会从服务器请求一个新的 HTML 页面
     2) 单页应用(SPA，Single-Page Application) 是一个由单个 JavaScript 应用程序组成的网站，该应用程序在用户浏览器中加载，然后在本地呈现 HTML。SPA 也可能在服务器上生成 HTML，但 SPA 的独特之处在于它们能够在浏览器中将您的网站作为 JavaScript 应用程序运行，以便在您导航时呈现新的 HTML 页面。此外， Next.js、Nuxt、SvelteKit、Remix、Gatsby 和 Create React App 都是 SPA 框架的示例。
 -  输入ip地址到出现网页的过程 见js/输入ip地址到出现网页的过程.txt
@@ -78,8 +78,7 @@
 
 
 ## nuxt
-  - ssr为何能提高加载速度?? ==> csr需要从浏览器下载html css等文件，ssr都是从服务器返回静态数据然后注水。和本文档“spa”问题参考链接一致:https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/
-
+  - ssr为何能提高加载速度?? ==> csr需要从浏览器下载html css等文件，ssr都是从服务器返回静态数据然后注水。和本文档“spa”问题参考链接一致:[astro ssr](https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/)
 
 ## js
   - fetch发送两次请求?? ==> 跨域时需要通过响应头allow-origin后端校验接口支不支持
