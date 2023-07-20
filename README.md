@@ -1,6 +1,6 @@
 #  从2023年开始记录和收集的前端面试题~~~
 
-## vue2, 在vue2vitets文件夹里
+## vue2 vite, 见vue2vitets/
 -  自定义指令
     1) 实现focus
     2) bind和inserted生命周期钩子函数的区别
@@ -35,6 +35,12 @@
     原子化的dom操作在极端场景下，可能会产生性能问题，Mvvm框架在dom同步过程是分批次的(Vue里称作一个Tick)，可以尽可能较少非必要的dom更新，提升了性能
     3)、多平台应用不同
     jquery只能用于浏览器应用dom树的操作，而mvvm框架本身剥离了dom层，使其可以运行在Server端(ssr), Native端(例如react-native)
+## vue2,webpack. 见vue2webpack;设置淘宝镜像npm config set registry https://registry.npm.taobao.org
+- npm install -g @vue/cli \
+  npm install -g @vue/cli-init \
+  // `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同 \
+  vue init webpack my-project
+
 
 
 ## react:
@@ -88,6 +94,13 @@
   2.除GET、HEAD和POST(content-type： application/x-www-form-urlencoded, multipart/form-data, text/plain Content-Type)以外的跨域请求（我们可以称为预检(Preflighted)的跨域请求）。
   总结：
   之所以会发送2次请求，那是因为我们使用了带预检(Preflighted)的跨域请求。该请求会在发送真实的请求之前发送一个类型为OPTIONS的预检请求。预检请求会检测服务器是否支持我们的真实请求所需要的跨域资源，唯有资源满足条件才会发送真实的请求。比如我们在请求头部增加了authorization项，那么在服务器响应头中需要放入Access-Control-Allow-Headers，并且其值中必须要包含authorization，否则OPTIONS预检会失败，从而导致不会发送真实的请求
+  - 有哪些dom节点 见js/dom
+  - 宏任务微任务:同步任务->微任务->宏任务 \
+    微任务包含：Promise.then、Object.observe、MutationObserver、process.nextTick(Node.js 环境) \
+    宏任务包含：script(整体代码)、setTimeout、setInterval、I/O、UI交互事件、postMessage、MessageChannel、setImmediate(Node.js 环境)
+   
+  - sort()原理  有参数没参数的差别:没参数按ASCII码排序，有参数按照实际计算排序
+  
 ## css 
   - rem局限性?? ==> 
    1) 无法适应页面尺寸。使用rem可能会导致页面布局变得混乱，因为每个元素的宽度都基于页面的根元素宽度，而不是页面的实际尺寸。这可能会导致页面上的元素无法自适应页面大小，从而导致页面呈现不良的效果。
