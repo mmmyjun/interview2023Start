@@ -21,6 +21,9 @@ export default {
     };
   },
   created() {},
+  beforeup() {
+
+  },
   mounted() {},
   methods: {
     getData() {

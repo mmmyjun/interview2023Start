@@ -40,6 +40,24 @@
   npm install -g @vue/cli-init \
   // `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同 \
   vue init webpack my-project
+- beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
+- nexttick异步任务在dom渲染完成前做了哪些操作?? ==>
+- 自定义指令 \
+  Vue.directive("currency", {
+    bind(el, binding, vnode) {
+      el.innerText = common.formatExchangeRate(el.innerText, binding.value);
+    },
+    componentUpdated(el, binding, vnode, oldVnode) {
+      if (binding.value === binding.oldValue && vnode.children[0].text === oldVnode.children[0].text) return;
+      el.innerText = common.formatExchangeRate(vnode.children[0].text, binding.value, vnode, oldVnode);
+    },
+  });
+
+
+## 移动端
+ - 网页移动端[lib-flexible](https://github.com/amfe/lib-flexible)底层原理:
+  1) 配合px2rem一起使用.
+  2) 由于viewport单位得到众多浏览器的兼容，lib-flexible这个过渡方案已经可以放弃使用，不管是现在的版本还是以前的版本，都存有一定的问题。建议大家开始使用viewport来替代此方。
 
 
 
@@ -107,6 +125,7 @@
    2) 不支持 iframe 而且有一个理念问题 大屏是为了更大更清晰还是为了承载更多内容。比如：小说网站，屏幕越小的移动设备如果用了rem肯定文字就越小，就会导致看文章的时候特别费眼
    3) PC端一般不使用REM，主要是因为兼容低版本浏览器。例如，从IE9开始就支持REM，但只是部分支持。Ie11完全支持。部分支持IE9和ie10
    4) CSS 属性 aspect-ratio 为盒子规定了首选纵横比，这个纵横比可以用于计算 auto 尺寸以及其他布局函数。
+   5) flex:1;flex-grow flex-shrink flex-basis区别,见css/
 
 ## vite: https://cn.vitejs.dev/guide/why.html
   - vite比webpack快在哪儿?? ==>
