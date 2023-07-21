@@ -43,13 +43,13 @@
 - beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
 - nexttick异步任务在dom渲染完成前做了哪些操作?? ==>
 - 自定义指令 \
-  Vue.directive("currency", {
+  Vue.directive("signal", {
     bind(el, binding, vnode) {
-      el.innerText = common.formatExchangeRate(el.innerText, binding.value);
+      el.innerText = changeSignal(el.innerText, binding.value);
     },
     componentUpdated(el, binding, vnode, oldVnode) {
       if (binding.value === binding.oldValue && vnode.children[0].text === oldVnode.children[0].text) return;
-      el.innerText = common.formatExchangeRate(vnode.children[0].text, binding.value, vnode, oldVnode);
+      el.innerText = changeSignal(vnode.children[0].text, binding.value, vnode, oldVnode);
     },
   });
 
