@@ -66,15 +66,15 @@
   2) 类组件和函数组件之间的区别?? ==> 类组件可以使用其他特性，如状态和生命周期钩子并且它有this; \
      函数组件只能接受props渲染到页面，无状态组件，没有this,不能使用生命周期钩子 \
      函数组件性能高于类组件，因为类组件使用要实例化，而函数组件直接执行返回结果即可
-  3) 生命周期,见react/
-    componentWillmount（）组件将要挂载
-    componentDidMount（）组件挂载完毕
-    componentWillUnmount（）组件将要卸载
-    componentWillReceiveProps （） 组件将要接受参数 （子组件将要接受新参数时触发的生命周期函数）
-    shouldComponentUpdate() 是否可以组件更新，必须有 Boolean 值得返回，如果为 true 则继续生命周期，如果为 false 则不执行任何后续操作，相当于更新操作的阀门
-    componentWillUpdate （） 组件即将要更新
-    componentDidUpdate（）组件更新完成
-    unmountComponentAtNode() 卸载组件
+  3) 生命周期,见react/ \
+    componentWillmount（）组件将要挂载 \
+    componentDidMount（）组件挂载完毕 \
+    componentWillUnmount（）组件将要卸载 \
+    componentWillReceiveProps （） 组件将要接受参数 （子组件将要接受新参数时触发的生命周期函数）\
+    shouldComponentUpdate() 是否可以组件更新，必须有 Boolean 值得返回，如果为 true 则继续生命周期，如果为 false 则不执行任何后续操作，相当于更新操作的阀门 \
+    componentWillUpdate （） 组件即将要更新 \
+    componentDidUpdate（）组件更新完成 \
+    unmountComponentAtNode() 卸载组件 \
     render（）初始化渲染、状态更新之后执行人 render
   4) 虚拟DOM, 见js/virtualdom \
    本质就是通过编译 JSX 得到的一个以 JavaScript 对象形式存在的 DOM 结构描述。在组件初始化阶段，会通过生命周期方法 render 生成虚拟 DOM节点，然后通过调用 ReactDOM.render 方法，完成虚拟 DOM 节点到真实 DOM 节点的转换。在组件更新阶段，会再次调用 render 方法生成新的虚拟 DOM 节点，然后借助Diffing 算法比对两次虚拟 DOM 节点的差异，从而找出变化的部分实现最小化的 DOM 更新。所以也可以说虚拟 DOM 是 React 核心算法 Diffing 的基石。
@@ -107,16 +107,15 @@
 ## js
   - fetch发送两次请求?? ==> 跨域时需要通过响应头allow-origin后端校验接口支不支持
   答案参考链接：https://www.nowcoder.com/questionTerminal/77e45f2d9733454babbbe73bd30270f4?orderByHotValue=1&page=1&onlyReference=false
-  发送2次请求需要满足以下2个条件：
-  1.必须要在跨域的情况下
-  2.除GET、HEAD和POST(content-type： application/x-www-form-urlencoded, multipart/form-data, text/plain Content-Type)以外的跨域请求（我们可以称为预检(Preflighted)的跨域请求）。
+  发送2次请求需要满足以下2个条件：\
+  1.必须要在跨域的情况下 \
+  2.除GET、HEAD和POST(content-type： application/x-www-form-urlencoded, multipart/form-data, text/plain Content-Type)以外的跨域请求（我们可以称为预检(Preflighted)的跨域请求）。 \
   总结：
   之所以会发送2次请求，那是因为我们使用了带预检(Preflighted)的跨域请求。该请求会在发送真实的请求之前发送一个类型为OPTIONS的预检请求。预检请求会检测服务器是否支持我们的真实请求所需要的跨域资源，唯有资源满足条件才会发送真实的请求。比如我们在请求头部增加了authorization项，那么在服务器响应头中需要放入Access-Control-Allow-Headers，并且其值中必须要包含authorization，否则OPTIONS预检会失败，从而导致不会发送真实的请求
-  - 有哪些dom节点 见js/dom
+  - 有哪些dom节点 见js/dom \
   - 宏任务微任务:同步任务->微任务->宏任务 \
     微任务包含：Promise.then、Object.observe、MutationObserver、process.nextTick(Node.js 环境) \
     宏任务包含：script(整体代码)、setTimeout、setInterval、I/O、UI交互事件、postMessage、MessageChannel、setImmediate(Node.js 环境)
-   
   - sort()原理  有参数没参数的差别:没参数按ASCII码排序，有参数按照实际计算排序
   
 ## css 
@@ -125,7 +124,7 @@
    2) 不支持 iframe 而且有一个理念问题 大屏是为了更大更清晰还是为了承载更多内容。比如：小说网站，屏幕越小的移动设备如果用了rem肯定文字就越小，就会导致看文章的时候特别费眼
    3) PC端一般不使用REM，主要是因为兼容低版本浏览器。例如，从IE9开始就支持REM，但只是部分支持。Ie11完全支持。部分支持IE9和ie10
    4) CSS 属性 aspect-ratio 为盒子规定了首选纵横比，这个纵横比可以用于计算 auto 尺寸以及其他布局函数。
-   5) flex:1;flex-grow flex-shrink flex-basis区别,见css/
+  - flex:1;flex-grow flex-shrink flex-basis区别,见css/
 
 ## vite: https://cn.vitejs.dev/guide/why.html
   - vite比webpack快在哪儿?? ==>
