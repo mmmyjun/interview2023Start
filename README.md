@@ -4,20 +4,18 @@
 - 自定义指令
   1) 实现focus
   2) bind和inserted生命周期钩子函数的区别
-- 路由守卫底层原理
+- 路由守卫
   1) 全局守卫：beforeEach、beforeResolve、afterEach
--  http code: 
-  1) 301永久重定向，说明请求的资源已经被移动到了由 Location 头部指定的url上，是固定的不会再改变; 
-  302是临时性重定向，旧地址还能用; 
-  304:not modified 未改变说明无需再次传输请求的内容，也就是说可以使用缓存的内容。这通常是在一些安全的方法（safe），例如GET 或HEAD 或在请求中附带了头部信息：If-None-Match 或If-Modified-Since。
-  2) 401: unauthorized; 403: forbidden表示对请求资源的访问被服务器拒绝; 405: method not allowed
-- v-model底层原理
+  2) beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
+- v-model
   1) vue2里v-model等于:value+@input/@change的语法糖.
-  - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
-  - 由于defineProperty只对属性做数据劫持而且没法监听属性的添加和移除，所以对数组方法push、splice、pop等做了重写，而且用Vue.set/this.$set的方式来弥补这部分的缺陷
-  - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
+   - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
+   - 由于defineProperty只对属性做数据劫持而且没法监听属性的添加和移除，所以对数组方法push、splice、pop等做了重写，而且用Vue.set/this.$set的方式来弥补这部分的缺陷
+   - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
   2) vue3里v-model等价于:modelValue+@update:modelValue的语法糖
-  - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
+   - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
+  3) 自定义组件的v-model \
+   -  {model: { prop: 'checked', event: 'change' }}
 - 静态资源的http缓存, 见js/http强缓存协商缓存
   1) 缓存是一种保存资源副本并在下次请求时直接使用该副本的技术。当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。这样带来的好处有：缓解服务器端压力，提升性能(获取资源的耗时更短了)。对于网站来说，缓存是达到高性能的重要组成部分。缓存需要合理配置，因为并不是所有资源都是永久不变的：重要的是对一个资源的缓存应截止到其下一次发生改变（即不能缓存过期的资源）。
   2) 强制缓存expire、cache-control(max-age=31536000)
@@ -40,18 +38,32 @@
   npm install -g @vue/cli-init \
   // `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同 \
   vue init webpack my-project
-- beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
-- nexttick异步任务在dom渲染完成前做了哪些操作?? ==>
+- nexttick异步任务在dom渲染完成前做了哪些操作??? ==>
+  - 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+  // 修改数据
+  vm.msg = 'Hello'
+  // DOM 还没有更新
+  Vue.nextTick(function () {
+    // DOM 更新了
+  })
+
+  // 作为一个 Promise 使用 (2.1.0 起新增，详见接下来的提示)
+  Vue.nextTick()
+  .then(function () {
+    // DOM 更新了
+  })
 - 自定义指令 \
-  Vue.directive("signal", {
-    bind(el, binding, vnode) {
-      el.innerText = changeSignal(el.innerText, binding.value);
-    },
-    componentUpdated(el, binding, vnode, oldVnode) {
-      if (binding.value === binding.oldValue && vnode.children[0].text === oldVnode.children[0].text) return;
-      el.innerText = changeSignal(vnode.children[0].text, binding.value, vnode, oldVnode);
-    },
-  });
+  ```js
+    Vue.directive("signal", {
+      bind(el, binding, vnode) {
+        el.innerText = changeSignal(el.innerText, binding.value);
+      },
+      componentUpdated(el, binding, vnode, oldVnode) {
+        if (binding.value === binding.oldValue && vnode.children[0].text === oldVnode.children[0].text) return;
+        el.innerText = changeSignal(vnode.children[0].text, binding.value, vnode, oldVnode);
+      },
+    });
+  ```
 
 
 ## 移动端
@@ -78,6 +90,15 @@
   render（）初始化渲染、状态更新之后执行人 render
 - 虚拟DOM, 见js/virtualdom \
   本质就是通过编译 JSX 得到的一个以 JavaScript 对象形式存在的 DOM 结构描述。在组件初始化阶段，会通过生命周期方法 render 生成虚拟 DOM节点，然后通过调用 ReactDOM.render 方法，完成虚拟 DOM 节点到真实 DOM 节点的转换。在组件更新阶段，会再次调用 render 方法生成新的虚拟 DOM 节点，然后借助Diffing 算法比对两次虚拟 DOM 节点的差异，从而找出变化的部分实现最小化的 DOM 更新。所以也可以说虚拟 DOM 是 React 核心算法 Diffing 的基石。
+- react形式的attrs $listener的处理:  
+  ```jsx 
+    <ButtonBase LinkComponent={GatsbyLink} href={app.url} disableRipple>
+    function GatsbyLink({ href, ...rest }: GatsbyLinkProps) {
+          return (
+              <Link to={href} {...rest} />
+          )
+      }
+  ```
 
 
 ## ts, 在vue2vitets文件夹src/tsTest
@@ -128,6 +149,25 @@
 
 ## vite: https://cn.vitejs.dev/guide/why.html
 - vite比webpack快在哪儿?? ==>
+
+## 网络相关
+-  http code: 
+  - 301永久重定向，说明请求的资源已经被移动到了由 Location 头部指定的url上，是固定的不会再改变; \
+  302是临时性重定向，旧地址还能用; \
+  304:not modified 未改变说明无需再次传输请求的内容，也就是说可以使用缓存的内容。这通常是在一些安全的方法（safe），例如GET 或HEAD 或在请求中附带了头部信息：If-None-Match 或If-Modified-Since。
+  - 401: unauthorized; \
+   403: forbidden表示对请求资源的访问被服务器拒绝; \
+   405: method not allowed
+- 浏览器渲染过程: 参考链接:https://juejin.cn/post/6844903565610188807#comment  见js/network \
+  DOM树的生成过程中不会被CSS加载执行阻塞，CSS只阻塞了DOM的渲染而不会影响其生成～\
+  - 所以浏览器的渲染过程主要包括以下几步：
+    - 解析HTML生成DOM树。
+    - 解析CSS生成CSSOM规则树。
+    - 将DOM树与CSSOM规则树合并在一起生成渲染树。
+    - 遍历渲染树开始布局，计算每个节点的位置大小信息。
+    - 将渲染树每个节点绘制到屏幕。
+
+
 
 ## 博客技术:mdx
 
