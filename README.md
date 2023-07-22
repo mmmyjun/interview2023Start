@@ -4,55 +4,7 @@
 - 自定义指令
   1) 实现focus
   2) bind和inserted生命周期钩子函数的区别
-- 路由守卫
-  1) 全局守卫：beforeEach、beforeResolve、afterEach
-  2) beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
-- v-model
-  1) vue2里v-model等于:value+@input/@change的语法糖.
-   - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
-   - 由于defineProperty只对属性做数据劫持而且没法监听属性的添加和移除，所以对数组方法push、splice、pop等做了重写，而且用Vue.set/this.$set的方式来弥补这部分的缺陷
-   - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
-  2) vue3里v-model等价于:modelValue+@update:modelValue的语法糖
-   - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
-  3) 自定义组件的v-model \
-   -  {model: { prop: 'checked', event: 'change' }}
-- 静态资源的http缓存, 见js/http强缓存协商缓存
-  1) 缓存是一种保存资源副本并在下次请求时直接使用该副本的技术。当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。这样带来的好处有：缓解服务器端压力，提升性能(获取资源的耗时更短了)。对于网站来说，缓存是达到高性能的重要组成部分。缓存需要合理配置，因为并不是所有资源都是永久不变的：重要的是对一个资源的缓存应截止到其下一次发生改变（即不能缓存过期的资源）。
-  2) 强制缓存expire、cache-control(max-age=31536000)
-- cookie缓存 setcookie(name,value,expire,path,domain,secure,Httponly)
-- spa: 见js/spampa 和本文档“ssr为何能提高加载速度”问题参考链接一致: [astro mpa-spa](https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/)的解释：
-  1) 多页应用 (MPA，Multi-Page Application) 是一个由多个 HTML 页面组成的网站，主要在服务器上渲染。当您导航到一个新页面时，您的浏览器会从服务器请求一个新的 HTML 页面
-  2) 单页应用(SPA，Single-Page Application) 是一个由单个 JavaScript 应用程序组成的网站，该应用程序在用户浏览器中加载，然后在本地呈现 HTML。SPA 也可能在服务器上生成 HTML，但 SPA 的独特之处在于它们能够在浏览器中将您的网站作为 JavaScript 应用程序运行，以便在您导航时呈现新的 HTML 页面。此外， Next.js、Nuxt、SvelteKit、Remix、Gatsby 和 Create React App 都是 SPA 框架的示例。
-- 输入ip地址到出现网页的过程 见js/输入ip地址到出现网页的过程.txt
-- 虚拟dom virtualdom 见js/virtualdom/vue
-- 受控非受控组件, 见js/受控非受控组件
-- Jquery / Mvvm框架的区别 \
-  1) 应用场景不同 \
-  jquery专注dom的原子操作, 而mvvm框架驱动整个web应用，操作dom只是它的一小部分，mvvm框架试图将数据映射到虚拟dom(非必须,比如svelte没有虚拟dom)，并在数据更新以后将更改同步到真实dom
-  2) 性能不同 \
-  原子化的dom操作在极端场景下，可能会产生性能问题，Mvvm框架在dom同步过程是分批次的(Vue里称作一个Tick)，可以尽可能较少非必要的dom更新，提升了性能
-  3) 多平台应用不同 \
-  jquery只能用于浏览器应用dom树的操作，而mvvm框架本身剥离了dom层，使其可以运行在Server端(ssr), Native端(例如react-native)
-## vue2,webpack. 见vue2webpack;设置淘宝镜像npm config set registry https://registry.npm.taobao.org
-- npm install -g @vue/cli \
-  npm install -g @vue/cli-init \
-  // `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同 \
-  vue init webpack my-project
-- nexttick异步任务在dom渲染完成前做了哪些操作??? ==>
-  - 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
-  // 修改数据
-  vm.msg = 'Hello'
-  // DOM 还没有更新
-  Vue.nextTick(function () {
-    // DOM 更新了
-  })
-
-  // 作为一个 Promise 使用 (2.1.0 起新增，详见接下来的提示)
-  Vue.nextTick()
-  .then(function () {
-    // DOM 更新了
-  })
-- 自定义指令 \
+  3) 项目中用到的例子
   ```js
     Vue.directive("signal", {
       bind(el, binding, vnode) {
@@ -64,12 +16,56 @@
       },
     });
   ```
+- 路由守卫
+  1) 全局守卫：beforeEach、beforeResolve、afterEach
+  2) beforeRouterEnter里用this,见js/vue/beforeRouteEnter用this.png
+- v-model
+  1) vue2里v-model等于:value+@input/@change的语法糖.
+   - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
+   - 由于defineProperty只对属性做数据劫持而且没法监听属性的添加和移除，所以对数组方法push、splice、pop等做了重写，而且用Vue.set/this.$set的方式来弥补这部分的缺陷
+   - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
+  2) vue3里v-model等价于:modelValue+@update:modelValue的语法糖
+   - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
+  3) 自定义组件的v-model
+   - {model: { prop: 'checked', event: 'change' }}
+- 静态资源的http缓存, 见js/http强缓存协商缓存
+  1) 缓存是一种保存资源副本并在下次请求时直接使用该副本的技术。当 web 缓存发现请求的资源已经被存储，它会拦截请求，返回该资源的拷贝，而不会去源服务器重新下载。这样带来的好处有：缓解服务器端压力，提升性能(获取资源的耗时更短了)。对于网站来说，缓存是达到高性能的重要组成部分。缓存需要合理配置，因为并不是所有资源都是永久不变的：重要的是对一个资源的缓存应截止到其下一次发生改变（即不能缓存过期的资源）。
+  2) 强制缓存expire、cache-control(max-age=31536000)
+- cookie缓存 setcookie(name,value,expire,path,domain,secure,Httponly)
+- spa: 见js/spampa 和本文档“ssr为何能提高加载速度”问题参考链接一致: [astro mpa-spa](https://docs.astro.build/zh-cn/concepts/mpa-vs-spa/)的解释：
+  1) 多页应用 (MPA，Multi-Page Application) 是一个由多个 HTML 页面组成的网站，主要在服务器上渲染。当您导航到一个新页面时，您的浏览器会从服务器请求一个新的 HTML 页面
+  2) 单页应用(SPA，Single-Page Application) 是一个由单个 JavaScript 应用程序组成的网站，该应用程序在用户浏览器中加载，然后在本地呈现 HTML。SPA 也可能在服务器上生成 HTML，但 SPA 的独特之处在于它们能够在浏览器中将您的网站作为 JavaScript 应用程序运行，以便在您导航时呈现新的 HTML 页面。此外， Next.js、Nuxt、SvelteKit、Remix、Gatsby 和 Create React App 都是 SPA 框架的示例。
+- 输入ip地址到出现网页的过程 见js/输入ip地址到出现网页的过程.txt
+- 虚拟dom virtualdom 见js/virtualdom/vue
+- 受控非受控组件, 见js/受控非受控组件
+- Jquery / Mvvm框架的区别 
+  1) 应用场景不同 \
+  jquery专注dom的原子操作, 而mvvm框架驱动整个web应用，操作dom只是它的一小部分，mvvm框架试图将数据映射到虚拟dom(非必须,比如svelte没有虚拟dom)，并在数据更新以后将更改同步到真实dom
+  2) 性能不同 \
+  原子化的dom操作在极端场景下，可能会产生性能问题，Mvvm框架在dom同步过程是分批次的(Vue里称作一个Tick)，可以尽可能较少非必要的dom更新，提升了性能
+  3) 多平台应用不同 \
+  jquery只能用于浏览器应用dom树的操作，而mvvm框架本身剥离了dom层，使其可以运行在Server端(ssr), Native端(例如react-native)
+## vue2,webpack. 见vue2webpack/;
+- 设置淘宝镜像npm config set registry https://registry.npm.taobao.org
+- npm install -g @vue/cli \
+  npm install -g @vue/cli-init \
+  // `vue init` 的运行效果将会跟 `vue-cli@2.x` 相同 \
+  vue init webpack my-project
+- nexttick异步任务在dom渲染完成前做了哪些操作?? ==>
+  - 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。\
+  // 修改数据
+  vm.msg = 'Hello' \
+  // DOM 还没有更新
+  Vue.nextTick(function () {// DOM 更新了})
+
+  // 作为一个 Promise 使用 (2.1.0 起新增，详见接下来的提示) \
+  Vue.nextTick().then(function () {// DOM 更新了})
 
 
 ## 移动端
- - 网页移动端[lib-flexible](https://github.com/amfe/lib-flexible)底层原理:
-  1) 配合px2rem一起使用.
-  2) 由于viewport单位得到众多浏览器的兼容，lib-flexible这个过渡方案已经可以放弃使用，不管是现在的版本还是以前的版本，都存有一定的问题。建议大家开始使用viewport来替代此方。
+- 网页移动端[lib-flexible](https://github.com/amfe/lib-flexible)底层原理:
+ - 配合px2rem一起使用.
+ - 由于viewport单位得到众多浏览器的兼容，lib-flexible这个过渡方案已经可以放弃使用，不管是现在的版本还是以前的版本，都存有一定的问题。建议大家开始使用viewport来替代此方。
 
 
 
@@ -128,12 +124,12 @@
 ## js
 - fetch发送两次请求?? ==> 跨域时需要通过响应头allow-origin后端校验接口支不支持
   答案参考链接：https://www.nowcoder.com/questionTerminal/77e45f2d9733454babbbe73bd30270f4?orderByHotValue=1&page=1&onlyReference=false
-  发送2次请求需要满足以下2个条件：\
-  1.必须要在跨域的情况下 \
-  2.除GET、HEAD和POST(content-type： application/x-www-form-urlencoded, multipart/form-data, text/plain Content-Type)以外的跨域请求（我们可以称为预检(Preflighted)的跨域请求）。 \
+  发送2次请求需要满足以下2个条件：
+ - 必须要在跨域的情况下 
+ - 除GET、HEAD和POST(content-type： application/x-www-form-urlencoded, multipart/form-data, text/plain Content-Type)以外的跨域请求（我们可以称为预检(Preflighted)的跨域请求）
   总结：
   之所以会发送2次请求，那是因为我们使用了带预检(Preflighted)的跨域请求。该请求会在发送真实的请求之前发送一个类型为OPTIONS的预检请求。预检请求会检测服务器是否支持我们的真实请求所需要的跨域资源，唯有资源满足条件才会发送真实的请求。比如我们在请求头部增加了authorization项，那么在服务器响应头中需要放入Access-Control-Allow-Headers，并且其值中必须要包含authorization，否则OPTIONS预检会失败，从而导致不会发送真实的请求
-- 有哪些dom节点 见js/dom \
+- 有哪些dom节点 见js/dom
 - 宏任务微任务:同步任务->微任务->宏任务 \
   微任务包含：Promise.then、Object.observe、MutationObserver、process.nextTick(Node.js 环境) \
   宏任务包含：script(整体代码)、setTimeout、setInterval、I/O、UI交互事件、postMessage、MessageChannel、setImmediate(Node.js 环境)
@@ -158,14 +154,14 @@
   - 401: unauthorized; \
    403: forbidden表示对请求资源的访问被服务器拒绝; \
    405: method not allowed
-- 浏览器渲染过程: 参考链接:https://juejin.cn/post/6844903565610188807#comment  见js/network \
-  DOM树的生成过程中不会被CSS加载执行阻塞，CSS只阻塞了DOM的渲染而不会影响其生成～\
+- 浏览器渲染过程: 参考链接:https://juejin.cn/post/6844903565610188807#comment  见js/network/
   - 所以浏览器的渲染过程主要包括以下几步：
     - 解析HTML生成DOM树。
     - 解析CSS生成CSSOM规则树。
     - 将DOM树与CSSOM规则树合并在一起生成渲染树。
     - 遍历渲染树开始布局，计算每个节点的位置大小信息。
     - 将渲染树每个节点绘制到屏幕。
+  - DOM树的生成过程中不会被CSS加载执行阻塞，CSS只阻塞了DOM的渲染而不会影响其生成～
 
 
 
