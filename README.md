@@ -133,7 +133,7 @@
 - 宏任务微任务:同步任务->微任务->宏任务 \
   微任务包含：Promise.then、Object.observe、MutationObserver、process.nextTick(Node.js 环境) \
   宏任务包含：script(整体代码)、setTimeout、setInterval、I/O、UI交互事件、postMessage、MessageChannel、setImmediate(Node.js 环境)
-- sort()原理  有参数没参数的差别:没参数按ASCII码排序，有参数按照实际计算排序
+- sort()原理  有参数没参数的差别:没参数按ASCII码排序，有参数按照实际计算排F序
   
 ## css 
 - rem局限性?? ==> 
@@ -141,7 +141,9 @@
   2) 不支持 iframe 而且有一个理念问题 大屏是为了更大更清晰还是为了承载更多内容。比如：小说网站，屏幕越小的移动设备如果用了rem肯定文字就越小，就会导致看文章的时候特别费眼
   3) PC端一般不使用REM，主要是因为兼容低版本浏览器。例如，从IE9开始就支持REM，但只是部分支持。Ie11完全支持。部分支持IE9和ie10
   4) CSS 属性 aspect-ratio 为盒子规定了首选纵横比，这个纵横比可以用于计算 auto 尺寸以及其他布局函数。
-- flex:1;flex-grow flex-shrink flex-basis区别,见css/
+- flex:1;flex-grow flex-shrink flex-basis区别,见css/flex
+- flex实现移动端上中下三层，上下各自固定在头部顶部100px,中间的超出显示滚动条，见css/flex
+- body display flex后，span为啥会变成block元素??????
 
 ## vite: https://cn.vitejs.dev/guide/why.html
 - vite比webpack快在哪儿?? ==>
