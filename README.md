@@ -23,6 +23,7 @@
   1) vue2里v-model等于:value+@input/@change的语法糖.
    - 在页面初始化时会把所有data里的数据的属性通过defineProperty设置get set，便于设置和追踪数据的变化。get时候会订阅数据变化，在数据变化时set里面调用notify通知数据变化；
    - 由于defineProperty只对属性做数据劫持而且没法监听属性的添加和移除，所以对数组方法push、splice、pop等做了重写，而且用Vue.set/this.$set的方式来弥补这部分的缺陷
+   - 总结: Vue的双向数据绑定是由数据劫持结合发布订阅者实现的。数据劫持是通过Object.defineProperty()来劫持对象数据的setter和getter操作，在数据变动时做你想做的事。
    - 另一种形式的v-model是v-bind的.sync。比如v-bind:title.sync等于:title+@update:title
   2) vue3里v-model等价于:modelValue+@update:modelValue的语法糖
    - 采用proxy对整个对象做数据劫持，所以不必重写数组方法也不必使用$set
