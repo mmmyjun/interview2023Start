@@ -61,7 +61,24 @@
 
   // 作为一个 Promise 使用 (2.1.0 起新增，详见接下来的提示) \
   Vue.nextTick().then(function () {// DOM 更新了})
-
+## vue性能问题/优化
+ - 主要:
+  - 页面加载优化
+   - 代码分割: const Foo = defineAsyncComponent(() => import('./Foo.vue'))
+   - 包体积与 Tree-shaking
+   - 选用正确的架构 ssr
+  - 更新优化
+  - 通用优化
+   - 大型虚拟列表
+   - 减少大型不可变数据的响应性开销
+ - other
+  - import { Button, Select } from 'element-ui'; 借助 babel-plugin-component，我们可以只引入需要的组件，以达到减小项目体积的目的 
+  - cdn(content delivery network)把静态资源分别部署在不同服务器上，做到负载均衡分担访问压力
+  - 按需加载() => import
+  - keepalive缓存一些渲染开销比较大的组件
+  - svg图标（按需引入)代替字体图标
+  - 虚拟列表、下滑加载更多
+  
 
 ## 移动端
 - 网页移动端[lib-flexible](https://github.com/amfe/lib-flexible)底层原理:
